@@ -4,31 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f64cd275-3c21-4617-a277-8f9b87ab7836" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/shaders/Default.glsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Core/Matrix.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Core/SpriteColorRecords.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/Scene/MainScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/Scene/Scene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/Window.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Render/Render.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Render/Shader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Util/KeyListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Util/MouseListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Util/Time.java" afterDir="false" />
+    <list default="true" id="f64cd275-3c21-4617-a277-8f9b87ab7836" name="Changes" comment="15.03.2023.18.17">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core/Matrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core/SpriteColorRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core/SpriteColorRecords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Scene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Scene/MainScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Render/Render.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Render/Render.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Render/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Render/Shader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,10 +78,46 @@
       <workItem from="1678812223741" duration="266000" />
       <workItem from="1678815773804" duration="4000" />
       <workItem from="1678815780784" duration="2000" />
+      <workItem from="1678896770645" duration="11122000" />
     </task>
+    <task id="LOCAL-00001" summary="15.03.2023.18.17">
+      <created>1678897119594</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678897119594</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="15.03.2023.18.17" />
+    <option name="LAST_COMMIT_MESSAGE" value="15.03.2023.18.17" />
   </component>
 </project>

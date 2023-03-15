@@ -105,7 +105,7 @@ public class Window {
     public void loop() {
         float beginTime = Time.getTime();
         float endTime;
-        float dt = -1.0f;
+        float dt = 0F;
 
         while (!glfwWindowShouldClose(glfwWindow)) {
             // Poll events
@@ -114,14 +114,15 @@ public class Window {
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            if (dt >= 0) {
-                currentScene.update(dt);
+            endTime = Time.getTime();
+            dt = endTime - beginTime;
+
+            currentScene.update(dt);
+            if (dt >= 1/60F) {
+                //beginTime = Time.getTime();
             }
 
             glfwSwapBuffers(glfwWindow);
-
-            endTime = Time.getTime();
-            dt = endTime - beginTime;
         }
     }
 }
