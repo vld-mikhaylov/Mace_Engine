@@ -3,18 +3,18 @@ package GUI.Scene;
 import Render.*;
 
 public class MainScene extends Scene {
-    private Render render;
+    private RenderMatrix renderMatrix;
 
-
-
-    public MainScene() {
-        init();
-    }
+    public MainScene() {}
 
     public void init() {
-        render = new Render();
+        renderMatrix = new RenderMatrix();
+        renderMatrix.init();
     }
-    public void update(float dt) {
-        render.update();
+    public void run() {
+        renderMatrix.run();
+    }
+    public void update() {
+        renderMatrix.update();
     }
 }

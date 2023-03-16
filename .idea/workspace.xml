@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f64cd275-3c21-4617-a277-8f9b87ab7836" name="Changes" comment="15.03.2023.18.17">
+    <list default="true" id="f64cd275-3c21-4617-a277-8f9b87ab7836" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Core/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core/Matrix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Core/SpriteColorRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core/SpriteColorRecords.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Scene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Scene/MainScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Scene/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Scene/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Window.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Render/Render.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Render/Render.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Render/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Render/Shader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Render/Render.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Render/RenderMatrix.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +37,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2MvcraHMqf11hUONxNY8nlV2Ffd" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
