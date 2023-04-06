@@ -1,4 +1,4 @@
-package Render;
+package Shader;
 
 import java.io.*;
 import java.nio.file.*;
@@ -6,12 +6,14 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
-    private int shaderProgramID;    // ID of the shader program.
-    private String vertexSource;    // Source to get GLSL shader's vertex program.
-    private String fragmentSource;  // Source to get GLSL shader's fragment program.
-    private String filePath;        // Source to get GLSL shader.
-
-
+    /** ID of the shader program.*/
+    private int shaderProgramID;
+    /** Source to get GLSL shader's vertex program.*/
+    private String vertexSource;
+    /** Source to get GLSL shader's fragment program.*/
+    private String fragmentSource;
+    /** Source to get GLSL shader.*/
+    private String filePath;
 
     public Shader(String filepath) {
         this.filePath = filepath;

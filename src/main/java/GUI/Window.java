@@ -1,134 +1,126 @@
+/*
+** -----------------------------------------------Window------------------------------------------------------
+** GLFW window object created to setup window frame and it's callbacks (mouse, keyboard etc.).
+** -----------------------------------------------------------------------------------------------------------
+** getInstance() - return Window instance. (Pattern feature)
+** init() - initialise window frame, MouseControl and MatrixObjects instances.
+** run() - initialise window frame and render events while not closed.
+** loop() - waits for events, after that swap window buffer to show rendered frame.
+** -----------------------------------------------------------------------------------------------------------
+** OTHER CLASS USAGE: Object, MouseControl.
+** PATTERN: Singleton.
+** NOTE: Keep glfwSwapInterval() to 0 and glfwWaitEvents() not glfwPullEvents,
+**       to increase quality of mouse callback and PC resource usage.
+*/
+
 package GUI;
 
-import Util.*;
-import GUI.Scene.*;
+import Config.ConfigValues;
+import Util.MouseControl;
+import GUI.GUI_Objects.MatrixObject.MatrixObject;
+import GUI.GUI_Objects.Object;
 
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
-
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Window {
-    private static Window window = null;
+    /** Window instance to achieve singleton pattern.*/
+    private static Window windowInstance;
+    /** MouseControl instance for Window class.*/
+    private MouseControl mouseControlInstance;
+    /** Object instance for Window class. (May actually inherit many other classes)*/
+    private Object objectInstance;
+    /** Window frame's unique id to operate with.*/
+    private long window_id;
 
-    private static Scene currentScene;
-
-    private int screenWidth;
-    private int screenHeight;
-    private int pixelSize;
-    private String screenTitle;
-    public float r, g, b, a;
-
-    private long glfwWindow;
-
-    private Window() {
-        this.screenWidth = 1000;
-        this.screenHeight = 1000;
-        this.pixelSize = 10;
-        this.screenTitle = "Mace Engine";
-        r = 40/255F;
-        b = 40/255F;
-        g = 40/255F;
-        a = 1;
-    }
-
-    public static Window get() {
-        if (Window.window == null) {
-            Window.window = new Window();
+    private Window() {}
+    /** Return Window instance. (Pattern feature)*/
+    public static Window getInstance() {
+        if (Window.windowInstance == null) {
+            Window.windowInstance = new Window();
         }
-        return Window.window;
+        return Window.windowInstance;
     }
-    public static void changeScene(int newScene) {
-        switch (newScene) {
-            case 0:
-                currentScene = new MainScene();
-                currentScene.init();
-                break;
-            default:
-                assert false : "Unknown scene '" + newScene + "'";
-                break;
-        }
-    }
-    public void run() {
-        init();
-        loop();
-
-        // Free the memory.
-        glfwFreeCallbacks(glfwWindow);
-        glfwDestroyWindow(glfwWindow);
-
-        // Terminate GLFW and the free the error callback.
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
-    }
-    public void init() {
-        //Setup an error callback.
+    /** Initialise window frame, MouseControl and MatrixObjects instances.*/
+    private void init() {
+        // Setup an error callback.
         GLFWErrorCallback.createPrint(System.err).set();
 
-        //Initialize GLFW.
+        // Initialize GLFW.
         if(!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW.");
         }
 
-        //Configure GLFW.
+        // Configure GLFW window frame.
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
-        //Create the window.
-        glfwWindow = glfwCreateWindow(this.screenWidth, this.screenHeight, this.screenTitle, NULL, NULL);
-        if (glfwWindow == NULL) {
+        // Create the window.
+        window_id = glfwCreateWindow(ConfigValues.windowWidth, ConfigValues.windowHeight, ConfigValues.windowTitle, NULL, NULL);
+        if (window_id == NULL) {
             throw new IllegalStateException("Failed to create the GLFW window.");
         }
 
-        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
-        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
-        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
-        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+        // Make the OpenGL context current.
+        glfwMakeContextCurrent(window_id);
 
-        //Make the OpenGL context current.
-        glfwMakeContextCurrent(glfwWindow);
-        //Enable v-sync.
-        glfwSwapInterval(1);
+        // Disable v-sync.
+        glfwSwapInterval(0);
 
-        //Make the window visible.
-        glfwShowWindow(glfwWindow);
+        // Make the window visible.
+        glfwShowWindow(window_id);
 
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the GLCapabilities instance and makes the OpenGL
-        // bindings available for use.
+        // LWJGL detects the context and makes the OpenGL bindings available for use.
         GL.createCapabilities();
 
-        Window.changeScene(0);
+        // Creates and initialise instance of MouseControl class.
+        mouseControlInstance = new MouseControl(window_id);
+        mouseControlInstance.init();
+
+        // Creates and initialise instance of MatrixObject class.
+        objectInstance = new MatrixObject();
+        objectInstance.init();
     }
-    public void loop() {
-        float beginTime = Time.getTime();
-        float endTime;
-        float dt;
 
-        while (!glfwWindowShouldClose(glfwWindow)) {
-            // Poll events.
-            glfwPollEvents();
+    /** Initialise window frame and render events while not closed.*/
+    public void run() {
+        // Initialise the window frame and setup it.
+        init();
 
-            glClearColor(r, g, b, a);
+        // Render all frame's events.
+        loop();
+
+        // Free the memory.
+        glfwFreeCallbacks(window_id);
+        glfwDestroyWindow(window_id);
+
+        // Terminate GLFW and the free the error callback.
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
+    }
+
+    /** Waits for events, after that swap window buffer to show rendered frame.*/
+    private void loop() {
+        while (!glfwWindowShouldClose(window_id)) {
+            // Wait all window events.
+            glfwWaitEvents();
+
+            // Set color of the window to black and clear color buffer.
+            glClearColor(0, 0, 0, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            endTime = Time.getTime();
-            dt = endTime - beginTime;
+            // Update and render all events.
+            mouseControlInstance.run();
+            objectInstance.run();
 
-            if (dt >= 1F) {
-                currentScene.update();
-                beginTime = Time.getTime();
-            }
-            currentScene.run();
-
-            glfwSwapBuffers(glfwWindow);
+            // Swaps the window's buffer.
+            glfwSwapBuffers(window_id);
         }
     }
 }

@@ -3,94 +3,49 @@ package Util;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class MouseListener {
-    private static MouseListener instance;
-    private double scrollX, scrollY;
-    private double xPos, yPos, lastY, lastX;
-    private boolean mouseButtonPressed[] = new boolean[GLFW_MOUSE_BUTTON_LAST];
-    private boolean isDragging;
+    private static MouseListener mouseListenerInstance;
+    private double xPos, yPos;
+    private boolean mouseButtonStatus[] = new boolean[GLFW_MOUSE_BUTTON_LAST];
 
 
     private MouseListener() {
-        this.scrollX = 0.0;
-        this.scrollY = 0.0;
-        this.xPos = 0.0;
-        this.yPos = 0.0;
-        this.lastX = 0.0;
-        this.lastY = 0.0;
+        xPos = 0.0;
+        yPos = 0.0;
     }
-
-    public static MouseListener get() {
-        if (MouseListener.instance == null) {
-            MouseListener.instance = new MouseListener();
+    public static MouseListener getInstance() {
+        if (MouseListener.mouseListenerInstance == null) {
+            MouseListener.mouseListenerInstance = new MouseListener();
         }
 
-        return MouseListener.instance;
+        return MouseListener.mouseListenerInstance;
     }
 
-    public static void mousePosCallback(long window, double xpos, double ypos) {
-        get().lastX = get().xPos;
-        get().lastY = get().yPos;
-        get().xPos = xpos;
-        get().yPos = ypos;
-        get().isDragging = get().mouseButtonPressed[0] || get().mouseButtonPressed[1] || get().mouseButtonPressed[2];
+    public static void mousePositionCallback(long window, double xpos, double ypos) {
+        getInstance().xPos = xpos;
+        getInstance().yPos = ypos;
     }
-
     public static void mouseButtonCallback(long window, int button, int action, int mods) {
         if (action == GLFW_PRESS) {
-            if (button < get().mouseButtonPressed.length) {
-                get().mouseButtonPressed[button] = true;
+            if (button < getInstance().mouseButtonStatus.length) {
+                getInstance().mouseButtonStatus[button] = true;
             }
         } else if (action == GLFW_RELEASE) {
-            if (button < get().mouseButtonPressed.length) {
-                get().mouseButtonPressed[button] = false;
-                get().isDragging = false;
+            if (button < getInstance().mouseButtonStatus.length) {
+                getInstance().mouseButtonStatus[button] = false;
             }
         }
-    }
-
-    public static void mouseScrollCallback(long window, double xOffset, double yOffset) {
-        get().scrollX = xOffset;
-        get().scrollY = yOffset;
-    }
-
-    public static void endFrame() {
-        get().scrollX = 0;
-        get().scrollY = 0;
-        get().lastX = get().xPos;
-        get().lastY = get().yPos;
     }
 
     public static float getX() {
-        return (float)get().xPos;
+        return (float)getInstance().xPos;
     }
-
     public static float getY() {
-        return (float)get().yPos;
+        return (float)getInstance().yPos;
     }
 
-    public static float getDx() {
-        return (float)(get().lastX - get().xPos);
-    }
-
-    public static float getDy() {
-        return (float)(get().lastY - get().yPos);
-    }
-
-    public static float getScrollX() {
-        return (float)get().scrollX;
-    }
-
-    public static float getScrollY() {
-        return (float)get().scrollY;
-    }
-
-    public static boolean isDragging() {
-        return get().isDragging;
-    }
-
-    public static boolean mouseButtonDown(int button) {
-        if (button < get().mouseButtonPressed.length) {
-            return get().mouseButtonPressed[button];
+    public static boolean mouseButtonStatus(int button) {
+        if (button < getInstance().mouseButtonStatus.length) {
+            return getInstance().mouseButtonStatus[button];
         } else {
             return false;
         }
