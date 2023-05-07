@@ -109,7 +109,7 @@ public class Window {
     private void loop() {
         while (!glfwWindowShouldClose(window_id)) {
             // Wait all window events.
-            glfwWaitEvents();
+            glfwPollEvents();
 
             // Set color of the window to black and clear color buffer.
             glClearColor(0, 0, 0, 1);

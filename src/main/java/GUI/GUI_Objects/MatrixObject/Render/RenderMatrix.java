@@ -10,7 +10,7 @@
  ** PATTERN: None.
  */
 
-package GUI.GUI_Objects.MatrixObject;
+package GUI.GUI_Objects.MatrixObject.Render;
 
 import Temp.Temp_MatrixObject;
 import Shader.Shader;

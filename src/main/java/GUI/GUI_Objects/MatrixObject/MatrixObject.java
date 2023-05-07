@@ -13,6 +13,9 @@
 
 package GUI.GUI_Objects.MatrixObject;
 
+import GUI.GUI_Objects.MatrixObject.Matrix.*;
+import GUI.GUI_Objects.MatrixObject.Physics.MatrixBypass;
+import GUI.GUI_Objects.MatrixObject.Render.*;
 import GUI.GUI_Objects.Object;
 
 public class MatrixObject extends Object {
@@ -21,9 +24,12 @@ public class MatrixObject extends Object {
     /** RenderMatrix instance for MatrixObject class.*/
     private RenderMatrix renderInstance;
 
+    MatrixBypass bypassInstance;
+
     public MatrixObject() {
         matrixInstance = new Matrix();
         renderInstance = new RenderMatrix();
+        bypassInstance = new MatrixBypass();
     }
     /** Initialise Matrix class and it's render class.*/
     public void init() {
@@ -39,6 +45,7 @@ public class MatrixObject extends Object {
 
     /** Updates RenderMatrix vertexArray if there any changes in the matrix.*/
     public void update() {
+        bypassInstance.run();
         if (matrixInstance.update()) {
             renderInstance.update();
         }

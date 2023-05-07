@@ -12,8 +12,4 @@ public record ConfigValues() {
     public static int[] matrixHeight = {
             0, 1000
     };
-    public static float[] spriteColorArray = {
-            40/255F, 40/255F, 40/255F, 1.0F,    //ID: 0, Material: void, Color: dark gray.
-            116/255F, 204/255F, 244/255F, 1.0F  //ID: 1, Material: water, Color: light blue.
-    };
 }

@@ -6,7 +6,7 @@
  ** run() - updates current mouse position and checks which gui_objects list to fill with new input data.
  ** update() - return position of the mouse on current window frame.
  ** -----------------------------------------------------------------------------------------------------------
- ** OTHER CLASS USAGE: ConfigValues, Temp_MatrixObject.
+ ** OTHER CLASS USAGE: ConfigValues, Matrix.
  ** PATTERN: None.
  ** NOTE: Create individual Temp classes for the new gui_objects classes, and leave callbacks via list there.
  */
@@ -14,20 +14,22 @@
 package Util;
 
 import Config.ConfigValues;
-import Temp.Temp_MatrixObject;
+import GUI.GUI_Objects.MatrixObject.Matrix.Matrix;
 
 import java.util.LinkedList;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class MouseControl {
+public class MouseControl implements Runnable {
     /** Window frame id to set correctly input callback.*/
     private long window_id;
     /** Current mouse position on the frame.*/
     private float xPos, yPos;
 
     public MouseControl(long window_id) {
-        Temp_MatrixObject.matrixInputData = new LinkedList<>();
+        Matrix.inputData = new LinkedList<>();
         this.window_id = window_id;
+
+        init();
     }
     /** Initialise glfw mouse callback via MouseListener. (Only position and buttons)*/
     public void init() {
@@ -44,9 +46,9 @@ public class MouseControl {
         if (MouseListener.mouseButtonStatus(0) && xPos_InMatrix && yPos_InMatrix) {
             int m_xPos = (int) (((xPos - ConfigValues.matrixWidth[0]) - ((xPos - ConfigValues.matrixWidth[0]) % ConfigValues.spriteSize)) / ConfigValues.spriteSize);
             int m_yPos = (int) (((yPos - ConfigValues.matrixHeight[0]) - ((yPos - ConfigValues.matrixHeight[0]) % ConfigValues.spriteSize)) / ConfigValues.spriteSize);
-            Temp_MatrixObject.matrixInputData.add(m_xPos);
-            Temp_MatrixObject.matrixInputData.add(m_yPos);
-            Temp_MatrixObject.matrixInputData.add(1);
+            Matrix.inputData.add(m_xPos);
+            Matrix.inputData.add(m_yPos);
+            Matrix.inputData.add(12);
         }
     }
 

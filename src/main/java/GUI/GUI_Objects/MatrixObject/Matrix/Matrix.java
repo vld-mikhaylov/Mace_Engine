@@ -14,18 +14,26 @@
  ** PATTERN: None.
  */
 
-package GUI.GUI_Objects.MatrixObject;
+package GUI.GUI_Objects.MatrixObject.Matrix;
 
 import Config.ConfigValues;
+import GUI.GUI_Objects.MatrixObject.Physics.Material;
+import GUI.GUI_Objects.MatrixObject.Physics.MaterialRecord;
 import Temp.Temp_MatrixObject;
+
+import java.util.LinkedList;
 
 public class Matrix {
     /** Matrix width calculated by it's allocated in ConfigValues width divided by sprite size.*/
-    public int matrixWidth;
+    public static int matrixWidth;
     /** Matrix height calculated by it's allocated in ConfigValues height divided by sprite size.*/
-    public int matrixHeight;
+    public static int matrixHeight;
     /** Matrix which consist each sprite's color information.*/
-    private int[][] materialMatrix;
+    public static int[][][] materialMatrix;
+    /** List of changes to sprites created by user input.*/
+    public static LinkedList inputData;
+    /** List of changes to sprites created by their physics logic.*/
+    public static LinkedList bypassData;
     /** Amount of vertex attribute parameters in 1 sprite.*/
     private final int vertexDataAmount = 24;
     /** Amount of indices in 1 sprite.*/
@@ -34,14 +42,15 @@ public class Matrix {
     public Matrix() {
         matrixWidth = (ConfigValues.matrixWidth[1] - ConfigValues.matrixWidth[0]) / ConfigValues.spriteSize;
         matrixHeight = (ConfigValues.matrixHeight[1] - ConfigValues.matrixHeight[0]) / ConfigValues.spriteSize;
-        materialMatrix = new int[matrixWidth][matrixHeight];
+        materialMatrix = new int[matrixWidth][matrixHeight][2];
     }
     /** Fill matrix and send vertex and indices data to Temp class.*/
     public void init() {
         // Set sprites colors in matrix to 0.
         for (int w = 0; w < matrixWidth; w++) {
             for (int h = 0; h < matrixHeight; h++) {
-                materialMatrix[w][h] = 0;
+                materialMatrix[w][h][0] = 3;
+                materialMatrix[w][h][1] = 0;
             }
         }
 
@@ -52,15 +61,29 @@ public class Matrix {
 
     /** Change sprite's values if there any input callback and update vertex array in Temp class.*/
     public boolean update() {
-        // Checks user mouse input and apply changes in matrix and vertex by changing color parameters.
-        if (Temp_MatrixObject.matrixInputData.size() >= 3) {
-            int xPos = (int) Temp_MatrixObject.matrixInputData.removeFirst();
-            int yPos = (int) Temp_MatrixObject.matrixInputData.removeFirst();
-            int material_id = (int) Temp_MatrixObject.matrixInputData.removeFirst();
-            materialMatrix[xPos][yPos] = material_id;
+        // Checks sprite's physics changes in matrix and apply them.
+        if (bypassData.size() >= 4) {
+            while (bypassData.size() != 0) {
+                int xPos = (int) bypassData.removeFirst();
+                int yPos = (int) bypassData.removeFirst();
+                materialMatrix[xPos][yPos][0] = (int) bypassData.removeFirst();
+                materialMatrix[xPos][yPos][1] = (int) bypassData.removeFirst();
 
-            vertexRewrite(xPos, yPos, "Color", getColor(xPos, yPos));
+                vertexRewrite(xPos, yPos, "Color", getColor(xPos, yPos));
+            }
             return true;
+        }
+        // Checks user mouse input and apply changes in matrix and vertex by changing color parameters.
+        if (inputData.size() >= 3) {
+            while (inputData.size() != 0) {
+                int xPos = (int) inputData.removeFirst();
+                int yPos = (int) inputData.removeFirst();
+                materialMatrix[xPos][yPos][0] = (int) inputData.removeFirst();
+                materialMatrix[xPos][yPos][1] = 0;
+
+                vertexRewrite(xPos, yPos, "Color", getColor(xPos, yPos));
+                return true;
+            }
         }
         return false;
     }
@@ -147,7 +170,7 @@ public class Matrix {
         int arrayPointer = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                colorArray[arrayPointer] = getMaterialColor(materialMatrix[xPos][yPos], j);
+                colorArray[arrayPointer] = getMaterialColor(materialMatrix[xPos][yPos][0], j);
                 arrayPointer++;
             }
         }
@@ -155,14 +178,8 @@ public class Matrix {
     }
     /** Return RGBA color of the material.*/
     public float getMaterialColor(int materialID, int elementID) {
-        float[] requestColor = new float[4];
-
-        // Return color's values from ConfigFile's array.
-        int pointer = 0;
-        for (int i = (4 * materialID); i < (4 * materialID) + 4; i++) {
-            requestColor[pointer] = ConfigValues.spriteColorArray[i];
-            pointer++;
-        }
+        Material materialInstance = MaterialRecord.getInstance(materialID);
+        float[] requestColor = materialInstance.getColor();
         return requestColor[elementID];
     }
     /** Rewrite one of the parameters of any sprite in the matrix.*/
