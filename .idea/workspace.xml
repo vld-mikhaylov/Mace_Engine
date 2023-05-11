@@ -4,22 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f64cd275-3c21-4617-a277-8f9b87ab7836" name="Changes" comment="06.04.2023.23.20">
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Gas/Void_Gas_1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Liquid/Void_Liquid_2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Liquid/Water_Liquid_12.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Material.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/MaterialRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/MatrixBypass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Solid/Void_Solid_3.java" afterDir="false" />
+    <list default="true" id="f64cd275-3c21-4617-a277-8f9b87ab7836" name="Changes" comment="07.05.2023.15.22">
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Solid/Sand_Solid_23.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/ThreadManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Util/KeyboardControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Config/ConfigValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Config/ConfigValues.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Matrix/Matrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Matrix/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Matrix/Matrix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/MatrixObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/MatrixObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/RenderMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Render/RenderMatrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Gas/Void_Gas_1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Gas/Void_Gas_1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Liquid/Void_Liquid_2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Liquid/Void_Liquid_2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Liquid/Water_Liquid_12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Liquid/Water_Liquid_12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/MaterialRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/MaterialRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/MatrixBypass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/MatrixPhysic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Solid/Void_Solid_3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Physics/Solid/Void_Solid_3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/MatrixObject/Render/RenderMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Render.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/Object.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUI_Objects/Object.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Window.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Temp/Temp_MatrixObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Temp/Temp_MatrixObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Shader/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Shader/Shader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Temp/Temp_MatrixObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util/KeyListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Util/MouseControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Util/MouseControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util/MouseListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util/Time.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util/TimeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Util/TimeTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +101,14 @@
       <workItem from="1683057274054" duration="11441000" />
       <workItem from="1683113687415" duration="12861000" />
       <workItem from="1683285776472" duration="4957000" />
-      <workItem from="1683461178646" duration="899000" />
+      <workItem from="1683461178646" duration="7699000" />
+      <workItem from="1683471719533" duration="8180000" />
+      <workItem from="1683482614037" duration="11284000" />
+      <workItem from="1683534120520" duration="3086000" />
+      <workItem from="1683539187864" duration="2000" />
+      <workItem from="1683556190499" duration="17593000" />
+      <workItem from="1683625003266" duration="9342000" />
+      <workItem from="1683793334866" duration="17267000" />
     </task>
     <task id="LOCAL-00001" summary="15.03.2023.18.17">
       <created>1678897119594</created>
@@ -101,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678897119594</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="07.05.2023.15.22">
+      <created>1683462134229</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1683462134229</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,7 +141,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -132,20 +155,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="15.03.2023.18.17" />
-    <option name="LAST_COMMIT_MESSAGE" value="15.03.2023.18.17" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="GradleRunConfiguration">
-        <watch expression="YPos" />
-        <watch expression="surrounding" />
-        <watch expression="surrounding" />
-        <watch expression="surrounding" />
-        <watch expression="Matrix.materialMatrix" language="JAVA" />
-      </configuration>
-    </watches-manager>
+    <MESSAGE value="07.05.2023.15.22" />
+    <option name="LAST_COMMIT_MESSAGE" value="07.05.2023.15.22" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Mace_Engine$Main.ic" NAME="Main Coverage Results" MODIFIED="1683053386885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Mace_Engine$Main.ic" NAME="Main Coverage Results" MODIFIED="1683731143576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

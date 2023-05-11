@@ -1,60 +1,88 @@
-/*
- ** -------------------------------------------MouseControl----------------------------------------------------
- ** This class use MouseListener to return mouse callbacks in comfortable for the gui_objects formats.
- ** -----------------------------------------------------------------------------------------------------------
- ** init() - initialise glfw mouse callback via MouseListener. (Only position and buttons)
- ** run() - updates current mouse position and checks which gui_objects list to fill with new input data.
- ** update() - return position of the mouse on current window frame.
- ** -----------------------------------------------------------------------------------------------------------
- ** OTHER CLASS USAGE: ConfigValues, Matrix.
- ** PATTERN: None.
- ** NOTE: Create individual Temp classes for the new gui_objects classes, and leave callbacks via list there.
- */
-
 package Util;
 
 import Config.ConfigValues;
 import GUI.GUI_Objects.MatrixObject.Matrix.Matrix;
+import GUI.Window;
 
-import java.util.LinkedList;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class MouseControl implements Runnable {
-    /** Window frame id to set correctly input callback.*/
-    private long window_id;
-    /** Current mouse position on the frame.*/
-    private float xPos, yPos;
+public class MouseControl {
+    /** Variable position of the mouse along the X coordinate.*/
+    private float xPos;
+    /** Variable position of the mouse along the Y coordinate.*/
+    private float yPos;
+    /** An array of mouse position variables transformed into matrix cell format.*/
+    private int[] m_Pos;
 
-    public MouseControl(long window_id) {
-        Matrix.inputData = new LinkedList<>();
-        this.window_id = window_id;
+    /** An instance of the MouseListener class, which is necessary to read the position of the mouse and the state of its buttons.*/
+    private MouseListener mouseListenerInstance;
 
-        init();
+    public MouseControl() {
+        m_Pos = new int[2];
+
+        mouseListenerInstance = new MouseListener();
     }
-    /** Initialise glfw mouse callback via MouseListener. (Only position and buttons)*/
     public void init() {
-        glfwSetCursorPosCallback(window_id, MouseListener::mousePositionCallback);
-        glfwSetMouseButtonCallback(window_id, MouseListener::mouseButtonCallback);
+        glfwSetCursorPosCallback(Window.window, mouseListenerInstance::positionCallback);
+        glfwSetMouseButtonCallback(Window.window, mouseListenerInstance::buttonCallback);
     }
 
-    /** Updates current mouse position and checks which GUI_Objects list to fill with new input data.*/
+    /** Depending on the position of the mouse on the screen, it sends data to the necessary GUI object.*/
     public void run() {
-        update();
+        xPos = mouseListenerInstance.getX();
+        yPos = mouseListenerInstance.getY();
 
         boolean xPos_InMatrix = (xPos >= ConfigValues.matrixWidth[0]) && (xPos < ConfigValues.matrixWidth[1]);
         boolean yPos_InMatrix = (yPos >= ConfigValues.matrixHeight[0]) && (yPos < ConfigValues.matrixHeight[1]);
-        if (MouseListener.mouseButtonStatus(0) && xPos_InMatrix && yPos_InMatrix) {
-            int m_xPos = (int) (((xPos - ConfigValues.matrixWidth[0]) - ((xPos - ConfigValues.matrixWidth[0]) % ConfigValues.spriteSize)) / ConfigValues.spriteSize);
-            int m_yPos = (int) (((yPos - ConfigValues.matrixHeight[0]) - ((yPos - ConfigValues.matrixHeight[0]) % ConfigValues.spriteSize)) / ConfigValues.spriteSize);
-            Matrix.inputData.add(m_xPos);
-            Matrix.inputData.add(m_yPos);
-            Matrix.inputData.add(12);
+        if (mouseListenerInstance.buttonStatus(0) && xPos_InMatrix && yPos_InMatrix) {
+            m_Pos[0] = (int) (((xPos - ConfigValues.matrixWidth[0]) - ((xPos - ConfigValues.matrixWidth[0]) % ConfigValues.spriteSize)) / ConfigValues.spriteSize);
+            m_Pos[1] = (int) (((yPos - ConfigValues.matrixHeight[0]) - ((yPos - ConfigValues.matrixHeight[0]) % ConfigValues.spriteSize)) / ConfigValues.spriteSize);
+            Matrix.inputData.add(m_Pos[0]);
+            Matrix.inputData.add(m_Pos[1]);
+            Matrix.inputData.add(KeyboardControl.currentMaterial);
+        }
+    }
+}
+
+class MouseListener {
+    private boolean[] mouseButtonStatus;
+    private double xPos, yPos;
+
+    public MouseListener() {
+        mouseButtonStatus =  new boolean[GLFW_MOUSE_BUTTON_LAST];
+
+        xPos = 0.0;
+        yPos = 0.0;
+    }
+
+    public void positionCallback(long window, double xPos, double yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+    public void buttonCallback(long window, int button, int action, int mods) {
+        if (action == GLFW_PRESS) {
+            if (button < mouseButtonStatus.length) {
+                mouseButtonStatus[button] = true;
+            }
+        } else if (action == GLFW_RELEASE) {
+            if (button < mouseButtonStatus.length) {
+                mouseButtonStatus[button] = false;
+            }
         }
     }
 
-    /** Return position of the mouse on current window frame.*/
-    private void update() {
-        xPos = MouseListener.getX();
-        yPos = MouseListener.getY();
+    public float getX() {
+        return (float) xPos;
+    }
+    public float getY() {
+        return (float) yPos;
+    }
+
+    public boolean buttonStatus(int button) {
+        if (button < mouseButtonStatus.length) {
+            return mouseButtonStatus[button];
+        } else {
+            return false;
+        }
     }
 }

@@ -1,24 +1,9 @@
-/*
-** -----------------------------------------------Window------------------------------------------------------
-** GLFW window object created to setup window frame and it's callbacks (mouse, keyboard etc.).
-** -----------------------------------------------------------------------------------------------------------
-** getInstance() - return Window instance. (Pattern feature)
-** init() - initialise window frame, MouseControl and MatrixObjects instances.
-** run() - initialise window frame and render events while not closed.
-** loop() - waits for events, after that swap window buffer to show rendered frame.
-** -----------------------------------------------------------------------------------------------------------
-** OTHER CLASS USAGE: Object, MouseControl.
-** PATTERN: Singleton.
-** NOTE: Keep glfwSwapInterval() to 0 and glfwWaitEvents() not glfwPullEvents,
-**       to increase quality of mouse callback and PC resource usage.
-*/
-
 package GUI;
 
 import Config.ConfigValues;
+import GUI.GUI_Objects.ThreadManager;
+import Util.KeyboardControl;
 import Util.MouseControl;
-import GUI.GUI_Objects.MatrixObject.MatrixObject;
-import GUI.GUI_Objects.Object;
 
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -28,25 +13,25 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Window {
-    /** Window instance to achieve singleton pattern.*/
-    private static Window windowInstance;
-    /** MouseControl instance for Window class.*/
-    private MouseControl mouseControlInstance;
-    /** Object instance for Window class. (May actually inherit many other classes)*/
-    private Object objectInstance;
-    /** Window frame's unique id to operate with.*/
-    private long window_id;
+    /** As the window and context are inseparably linked, this object is used as both a context and window handle.*/
+    public static long window;
 
-    private Window() {}
-    /** Return Window instance. (Pattern feature)*/
-    public static Window getInstance() {
-        if (Window.windowInstance == null) {
-            Window.windowInstance = new Window();
-        }
-        return Window.windowInstance;
+    /** The KeyboardControl class instance is required to read the user's key status.*/
+    private KeyboardControl keyboardControlInstance;
+    /** The MouseControl class instance is required to read the user's mouse movements.*/
+    private MouseControl mouseControlInstance;
+    /** An instance of the ThreadManager class is required to correctly render and processing of GUI objects.*/
+    private ThreadManager threadManagerInstance;
+    /** An instance of the Render class is required to display an image on the screen by passing vertex data to the GPU.*/
+    private Render renderInstance;
+
+    public Window() {
+        keyboardControlInstance = new KeyboardControl();
+        mouseControlInstance = new MouseControl();
+        threadManagerInstance = new ThreadManager();
+        renderInstance = new Render();
     }
-    /** Initialise window frame, MouseControl and MatrixObjects instances.*/
-    private void init() {
+    public void init() {
         // Setup an error callback.
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -62,65 +47,60 @@ public class Window {
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
         // Create the window.
-        window_id = glfwCreateWindow(ConfigValues.windowWidth, ConfigValues.windowHeight, ConfigValues.windowTitle, NULL, NULL);
-        if (window_id == NULL) {
+        window = glfwCreateWindow(ConfigValues.windowWidth, ConfigValues.windowHeight, ConfigValues.windowTitle, NULL, NULL);
+        if (window == NULL) {
             throw new IllegalStateException("Failed to create the GLFW window.");
         }
 
         // Make the OpenGL context current.
-        glfwMakeContextCurrent(window_id);
+        glfwMakeContextCurrent(window);
 
         // Disable v-sync.
-        glfwSwapInterval(0);
+        glfwSwapInterval(1);
 
         // Make the window visible.
-        glfwShowWindow(window_id);
+        glfwShowWindow(window);
 
-        // LWJGL detects the context and makes the OpenGL bindings available for use.
+        // LWJGL detect the context and make the OpenGL bindings available for use.
         GL.createCapabilities();
 
-        // Creates and initialise instance of MouseControl class.
-        mouseControlInstance = new MouseControl(window_id);
+        // Initialise instances.
+        keyboardControlInstance.init();
         mouseControlInstance.init();
-
-        // Creates and initialise instance of MatrixObject class.
-        objectInstance = new MatrixObject();
-        objectInstance.init();
+        threadManagerInstance.init();
+        renderInstance.init();
     }
 
     /** Initialise window frame and render events while not closed.*/
     public void run() {
-        // Initialise the window frame and setup it.
-        init();
-
-        // Render all frame's events.
-        loop();
-
-        // Free the memory.
-        glfwFreeCallbacks(window_id);
-        glfwDestroyWindow(window_id);
-
-        // Terminate GLFW and the free the error callback.
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
-    }
-
-    /** Waits for events, after that swap window buffer to show rendered frame.*/
-    private void loop() {
-        while (!glfwWindowShouldClose(window_id)) {
-            // Wait all window events.
+        // Start parallel threads of GUI objects.
+        threadManagerInstance.setThreadStatus(0, 1);
+        threadManagerInstance.run();
+        while (!glfwWindowShouldClose(window)) {
+            // Poll all window events.
             glfwPollEvents();
 
             // Set color of the window to black and clear color buffer.
             glClearColor(0, 0, 0, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            // Update and render all events.
+            // Read and render all events.
+            keyboardControlInstance.run();
             mouseControlInstance.run();
-            objectInstance.run();
+            renderInstance.run();
 
-            // Swaps the window's buffer.
-            glfwSwapBuffers(window_id);
+            // Swap the window's buffers.
+            glfwSwapBuffers(window);
         }
+        // Wait for all threads to end.
+        threadManagerInstance.end();
+
+        // Free the memory.
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+
+        // Terminate GLFW and the free the error callback.
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
     }
 }

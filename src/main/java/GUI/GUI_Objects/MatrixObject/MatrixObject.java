@@ -1,53 +1,30 @@
-/*
- ** ------------------------------------------MatrixObject----------------------------------------------------
- ** This class stores, refreshes and renders game matrix.
- ** -----------------------------------------------------------------------------------------------------------
- ** init() - initialise Matrix class and it's render class.
- ** run() - updates changes in matrix, send them to RenderMatrix and after that render image.
- ** update() - updates RenderMatrix vertexArray if there any changes in the matrix.
- ** -----------------------------------------------------------------------------------------------------------
- ** OTHER CLASS USAGE: Matrix, RenderMatrix.
- ** PATTERN: None.
- */
-
-
 package GUI.GUI_Objects.MatrixObject;
 
-import GUI.GUI_Objects.MatrixObject.Matrix.*;
-import GUI.GUI_Objects.MatrixObject.Physics.MatrixBypass;
-import GUI.GUI_Objects.MatrixObject.Render.*;
+import GUI.GUI_Objects.MatrixObject.Matrix.Matrix;
+import GUI.GUI_Objects.MatrixObject.Physics.MatrixPhysic;
 import GUI.GUI_Objects.Object;
+import GUI.GUI_Objects.ThreadManager;
 
 public class MatrixObject extends Object {
-    /** Matrix instance for MatrixObject class.*/
+    /** An instance of the Matrix class that sends the matrix data for rendering, accepts changes from input and physics.*/
     private Matrix matrixInstance;
-    /** RenderMatrix instance for MatrixObject class.*/
-    private RenderMatrix renderInstance;
-
-    MatrixBypass bypassInstance;
+    /** An instance of the MatrixPhysic class that receives data from each sprite, processes its movement, and writes these changes to the matrix.*/
+    private MatrixPhysic matrixPhysicInstance;
 
     public MatrixObject() {
         matrixInstance = new Matrix();
-        renderInstance = new RenderMatrix();
-        bypassInstance = new MatrixBypass();
-    }
-    /** Initialise Matrix class and it's render class.*/
-    public void init() {
+        matrixPhysicInstance = new MatrixPhysic();
+
         matrixInstance.init();
-        renderInstance.init();
+        matrixPhysicInstance.init();
     }
 
-    /** Updates changes in matrix, send them to RenderMatrix and after that render image.*/
+    /** While the thread is running, the matrix will accept data from the user and other classes, and then send it to render.*/
+    @Override
     public void run() {
-        update();
-        renderInstance.render();
-    }
-
-    /** Updates RenderMatrix vertexArray if there any changes in the matrix.*/
-    public void update() {
-        bypassInstance.run();
-        if (matrixInstance.update()) {
-            renderInstance.update();
+        while (ThreadManager.isThreadAlive[0]) {
+            matrixInstance.run();
+            matrixPhysicInstance.run();
         }
     }
 }

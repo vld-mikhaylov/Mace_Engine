@@ -1,11 +1,11 @@
-package GUI.GUI_Objects.MatrixObject.Physics.Liquid;
+package GUI.GUI_Objects.MatrixObject.Physics.Solid;
 
 import GUI.GUI_Objects.MatrixObject.Physics.Material;
 
-public class Water_Liquid_12 extends Material {
-    private static final float[] color = {116/255F, 204/255F, 244/255F, 1.0F};
-    private static final int material = 12;
-    private static final int density = 1000;
+public class Sand_Solid_23 extends Material {
+    private static final float[] color = {244/255F, 164/255F, 96/255F, 1.0F};
+    private static final int material = 23;
+    private static final int density = 1700;
 
     public float[] getColor() {
         return color;
@@ -31,13 +31,8 @@ public class Water_Liquid_12 extends Material {
         } else if (surroundingSprites[2][2]) {
             posChange[0]++;
             posChange[1]++;
-        } else if (surroundingSprites[0][1] && surroundingSprites[2][1]) {
-            posChange[0] = (int) Math.round(2 * Math.random() - 1);
-        } else if (surroundingSprites[0][1]) {
-            posChange[0]--;
-        } else if (surroundingSprites[2][1]) {
-            posChange[0]++;
         }
+
         return posChange;
     }
 }

@@ -7,11 +7,9 @@
 
 package GUI.GUI_Objects;
 
-public abstract class Object {
+public abstract class Object implements Runnable {
     public Object() {}
-    public abstract void init();
 
+    @Override
     public abstract void run();
-
-    public abstract void update();
 }

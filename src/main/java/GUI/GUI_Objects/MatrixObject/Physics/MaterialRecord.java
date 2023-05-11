@@ -5,10 +5,10 @@ import GUI.GUI_Objects.MatrixObject.Physics.Liquid.*;
 import GUI.GUI_Objects.MatrixObject.Physics.Solid.*;
 
 public class MaterialRecord {
-    public static Material getInstance(int material_ID) {
+    public static Material getInstance(int material) {
         Material materialInstance = null;
 
-        switch(material_ID) {
+        switch(material) {
             case 1:
                 materialInstance = new Void_Gas_1();
                 break;
@@ -20,6 +20,11 @@ public class MaterialRecord {
                 break;
             case 12:
                 materialInstance = new Water_Liquid_12();
+                break;
+            case 23:
+                materialInstance = new Sand_Solid_23();
+                break;
+            default:
                 break;
         }
         return materialInstance;

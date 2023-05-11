@@ -6,8 +6,9 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
-    /** ID of the shader program.*/
-    private int shaderProgramID;
+    /** Unique key of shader program.*/
+    private int shader;
+
     /** Source to get GLSL shader's vertex program.*/
     private String vertexSource;
     /** Source to get GLSL shader's fragment program.*/
@@ -15,10 +16,10 @@ public class Shader {
     /** Source to get GLSL shader.*/
     private String filePath;
 
-    public Shader(String filepath) {
-        this.filePath = filepath;
+    public Shader(String filePath) {
+        this.filePath = filePath;
         try {
-            String source = new String(Files.readAllBytes(Paths.get(filepath)));
+            String source = new String(Files.readAllBytes(Paths.get(filePath)));
             String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
 
             // Find the first pattern after #type 'pattern'.
@@ -48,62 +49,64 @@ public class Shader {
             }
         } catch(IOException e) {
             e.printStackTrace();
-            assert false : "Error: Could not open file for shader: '" + filepath + "'";
+            assert false : "Error: Could not open file for shader: '" + filePath + "'";
         }
     }
-
-    public void compile() {
-        int vertexID, fragmentID;
+    public void init() {
+        int vertex, fragment;
 
         // First load and compile the vertex shader.
-        vertexID = glCreateShader(GL_VERTEX_SHADER);
+        vertex = glCreateShader(GL_VERTEX_SHADER);
         // Pass the shader source to the GPU.
-        glShaderSource(vertexID, vertexSource);
-        glCompileShader(vertexID);
+        glShaderSource(vertex, vertexSource);
+        glCompileShader(vertex);
 
         // Check for errors in compilation.
-        int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
+        int success = glGetShaderi(vertex, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
-            int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
+            int len = glGetShaderi(vertex, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: '" + filePath + "'\n\tVertex shader compilation failed.");
-            System.out.println(glGetShaderInfoLog(vertexID, len));
+            System.out.println(glGetShaderInfoLog(vertex, len));
             assert false : "";
         }
 
         // First load and compile the vertex shader.
-        fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
+        fragment = glCreateShader(GL_FRAGMENT_SHADER);
         // Pass the shader source to the GPU.
-        glShaderSource(fragmentID, fragmentSource);
-        glCompileShader(fragmentID);
+        glShaderSource(fragment, fragmentSource);
+        glCompileShader(fragment);
 
         // Check for errors in compilation.
-        success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
+        success = glGetShaderi(fragment, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
-            int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
+            int len = glGetShaderi(fragment, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: '" + filePath + "'\n\tFragment shader compilation failed.");
-            System.out.println(glGetShaderInfoLog(fragmentID, len));
+            System.out.println(glGetShaderInfoLog(fragment, len));
             assert false : "";
         }
 
         // Link shaders and check for errors.
-        shaderProgramID = glCreateProgram();
-        glAttachShader(shaderProgramID, vertexID);
-        glAttachShader(shaderProgramID, fragmentID);
-        glLinkProgram(shaderProgramID);
+        shader = glCreateProgram();
+        glAttachShader(shader, vertex);
+        glAttachShader(shader, fragment);
+        glLinkProgram(shader);
 
         // Check for linking errors.
-        success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
+        success = glGetProgrami(shader, GL_LINK_STATUS);
         if (success == GL_FALSE) {
-            int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
+            int len = glGetProgrami(shader, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: '" + filePath + "'\n\tLinking of shaders failed.");
-            System.out.println(glGetProgramInfoLog(shaderProgramID, len));
+            System.out.println(glGetProgramInfoLog(shader, len));
             assert false : "";
         }
     }
-    public void use() {
+
+    /** Bind shader program.*/
+    public void attach() {
         // Bind shader program.
-        glUseProgram(shaderProgramID);
+        glUseProgram(shader);
     }
+    /** Unbind shader program.*/
     public void detach() {
         // Unbind shader program.
         glUseProgram(0);

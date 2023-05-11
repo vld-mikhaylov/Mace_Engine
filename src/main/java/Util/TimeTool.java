@@ -9,7 +9,6 @@ public class TimeTool {
     }
     public boolean getTimer(float timeDifference) {
         timerEndTime = Time.getTime();
-
         return timerEndTime - timerStartTime >= timeDifference;
     }
 
@@ -18,7 +17,14 @@ public class TimeTool {
     }
     public float getSecondmeter() {
         secondmeterEndTime = Time.getTime();
-
         return secondmeterEndTime - secondmeterStartTime;
+    }
+}
+
+class Time {
+    public static float timeStarted = System.nanoTime();
+
+    public static float getTime() {
+        return (float) ((System.nanoTime() - timeStarted) * 1E-9);
     }
 }
