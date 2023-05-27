@@ -18,6 +18,9 @@ public class MaterialRecord {
             case 3:
                 materialInstance = new Void_Solid_3();
                 break;
+            case 11:
+                materialInstance = new Water_Gas_11();
+                break;
             case 12:
                 materialInstance = new Water_Liquid_12();
                 break;

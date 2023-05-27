@@ -41,7 +41,7 @@ public class MatrixPhysic {
                     if (Matrix.matrix[xPos][yPos][0] != 3) {
                         materialInstance = MaterialRecord.getInstance(Matrix.matrix[xPos][yPos][0]);
                         posChange = materialInstance.getPosChange(readSurrounding(xPos, yPos));
-                        if ((posChange[0] != 0 || posChange[1] != 0) && Matrix.matrix[xPos][yPos][1] == 0) {
+                        if ((posChange[0] != 0 || posChange[1] != 0) && Matrix.matrix[xPos][yPos][1] == 0 && Matrix.matrix[xPos + posChange[0]][yPos + posChange[1]][1] == 0) {
                             int tempValues[] = new int[2];
                             tempValues[0] = Matrix.matrix[xPos + posChange[0]][yPos + posChange[1]][0];
                             tempValues[1] = Matrix.matrix[xPos + posChange[0]][yPos + posChange[1]][1];
@@ -53,6 +53,7 @@ public class MatrixPhysic {
                             Matrix.physicData.add(yPos);
                             Matrix.physicData.add(tempValues[0]);
                             Matrix.physicData.add(tempValues[1]);
+                            xPos--;
                         }
                     }
                     xPos++;
